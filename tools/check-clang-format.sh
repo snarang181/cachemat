@@ -20,6 +20,8 @@ for file in $staged_files; do
   "$CLANG_FORMAT_BIN" "$file" > "$tmpdir/$(basename "$file")"
   if ! diff -u "$file" "$tmpdir/$(basename "$file")" >/dev/null; then
     echo "clang-format mismatch: $file"
+    # Run clang-format on the file with -i option to add suggested changes
+    "$CLANG_FORMAT_BIN" -i "$file"
     failed=1
   fi
 done
